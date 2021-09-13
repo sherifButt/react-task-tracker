@@ -15,18 +15,18 @@ function App(props) {
   // STATE
   const [tasks, setTasks] = useState([]);
   const [showAddTaskForm, setShowAddTaskForm] = useState(false);
-  const [counter,setCounter] = useState(0)
+  const [counter, setCounter] = useState(0)
 
   // ANIMATIONS
   const transitionAddForm = useTransition(showAddTaskForm, {
-      from: { opacity: 0, y: -40 },
-      enter: { opacity: 1, y: 50 },
-      leave: { opacity: 0, y: 10 },
-    }),
+    from: { opacity: 0, y: -40 },
+    enter: { opacity: 1, y: 50 },
+    leave: { opacity: 0, y: 10 },
+  }),
     transitionSlideTasks = useTransition(showAddTaskForm, {
-      from: {  y: 0 },
-      enter: {  y: 50 },
-      leave: {  y: 10 },
+      from: { y: 0 },
+      enter: { y: 50 },
+      leave: { y: 10 },
     });
 
   useEffect(() => {
@@ -41,8 +41,9 @@ function App(props) {
   // fetch Tasks
   const fetchTasks = async () => {
     try {
-      const res = await fetch("http://localhost:5000/tasks", { method: "GET" });
+      const res = await fetch(process.env.REACT_APP_SERVER+"tasks", { method: "GET" });
       const data = await res.json();
+      console.log("-->", process.env.REACT_APP_SERVER)
       return data;
     } catch (err) {
       console.error("Error featch tasks: ", err);
@@ -52,19 +53,19 @@ function App(props) {
   // fetch one Task
   const fetchTask = async (id) => {
     try {
-      const res = await fetch(`http://localhost:5000/tasks/${id}`, {
+      const res = await fetch(`${ process.env.REACT_APP_SERVER }tasks/${ id }`, {
         method: "GET",
       });
       const data = await res.json();
       return data;
     } catch (err) {
-      console.error(`Error featch task [${id}]:`, err);
+      console.error(`Error featch task [${ id }]:`, err);
     }
   };
 
   // Update data
   const updateData = async (id, data) => {
-    await fetch(`http://localhost:5000/tasks/${id}`, {
+    await fetch(`${ process.env.REACT_APP_SERVER }tasks/${ id }`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
@@ -75,13 +76,13 @@ function App(props) {
 
   // Delete Task
   const deleteTask = async (id) => {
-    await fetch(`http://localhost:5000/tasks/${id}`, { method: "DELETE" });
+    await fetch(`${ process.env.REACT_APP_SERVER }/tasks/${ id }`, { method: "DELETE" });
     setTasks(tasks.filter((task) => task.id !== id));
   };
 
   // Post all tasks
   const saveTasks = async (tasks) => {
-    await fetch("http://localhost:5000/", {
+    await fetch(process.env.SERVER, {
       method: "POST",
       headers: {
         "Content-type": "application/json",
@@ -92,7 +93,7 @@ function App(props) {
 
   // Save reorderd Tasks to Server
   const saveReorderdTasks = async (srcI, disI) => {
-    await fetch(`http://localhost:5000/tasks/?srcI=${srcI}&disI=${disI}`, {
+    await fetch(`${ process.env.REACT_APP_SERVER }tasks/?srcI=${ srcI }&disI=${ disI }`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -129,7 +130,7 @@ function App(props) {
 
   // Add Task
   const addTask = async (task) => {
-    const res = await fetch("http://localhost:5000/tasks/", {
+    const res = await fetch(`${ process.env.REACT_APP_SERVER }tasks/`, {
       method: "POST",
       headers: {
         "content-type": "application/json",
@@ -156,7 +157,7 @@ function App(props) {
       payload.id === task.id ? { ...task, text: payload.text } : task
     );
     setTasks(newTasks);
-    
+
 
     // Update Tasks state with newTaskInfo
     // PUT newTaskInfo to server
@@ -166,12 +167,11 @@ function App(props) {
   return (
     <Router>
       <div className="container">
-        <button onClick={() => setCounter((i)=>i+1)}>increment</button>
-        <h1>counter: {counter}</h1>
+
         <Header
           showAddTaskForm={showAddTaskForm}
           toggleAddTaskForm={() => setShowAddTaskForm(!showAddTaskForm)}
-          
+
         />
 
         <Route
@@ -185,7 +185,7 @@ function App(props) {
                     <AddTask
                       addTask={addTask}
                       showAddTaskForm={showAddTaskForm}
-                      onAnimationEnd={()=>console.log('animation ended')}
+                      onAnimationEnd={() => console.log('animation ended')}
                     />
                   </animated.div>
                 ) : (
