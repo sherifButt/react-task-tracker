@@ -1,7 +1,6 @@
 import { useState } from "react";
-import {  useSpring } from "react-spring";
 
-const AddTask = ({ addTask, showAddTaskForm }) => {
+const AddTask = ({ addTask }) => {
   // Vars
   const date = new Date();
   const hour = date.getHours() < 10 ? "0" + date.getHours() : date.getHours();
@@ -16,11 +15,7 @@ const AddTask = ({ addTask, showAddTaskForm }) => {
   const [reminder, setReminder] = useState(true);
 
   // ANIMATION
-  const props = useSpring({
-    to: { opacity: 1, y: 50 },
-    from: { opacity: 0, y: 0 },
-  });
-
+ 
   const onSubmit = (e) => {
     e.preventDefault();
     if (!text) {

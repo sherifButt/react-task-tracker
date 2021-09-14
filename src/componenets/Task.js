@@ -1,5 +1,4 @@
-import { useState } from "react";
-import { FaTimes, FaClock, FaEdit, FaEquals } from "react-icons/fa";
+import { FaClock } from "react-icons/fa";
 import { dayName } from "../utls/date";
 import { useSpring, animated } from "react-spring";
 

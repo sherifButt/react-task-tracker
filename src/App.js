@@ -15,24 +15,19 @@ function App(props) {
   // STATE
   const [tasks, setTasks] = useState([]);
   const [showAddTaskForm, setShowAddTaskForm] = useState(false);
-  const [counter, setCounter] = useState(0)
 
   // ANIMATIONS
   const transitionAddForm = useTransition(showAddTaskForm, {
     from: { opacity: 0, y: -40 },
     enter: { opacity: 1, y: 50 },
     leave: { opacity: 0, y: 10 },
-  }),
-    transitionSlideTasks = useTransition(showAddTaskForm, {
-      from: { y: 0 },
-      enter: { y: 50 },
-      leave: { y: 10 },
-    });
+  });
 
   useEffect(() => {
     const getTasks = async () => {
       const tasksFromServer = await fetchTasks();
-      setTasks(tasksFromServer);
+      
+      setTasks(tasksFromServer?tasksFromServer:[]);
     };
     getTasks();
   }, []);
@@ -43,7 +38,7 @@ function App(props) {
     try {
       const res = await fetch(process.env.REACT_APP_SERVER+"tasks", { method: "GET" });
       const data = await res.json();
-      console.log("-->", process.env.REACT_APP_SERVER)
+      // console.log("-->", process.env.REACT_APP_SERVER)
       return data;
     } catch (err) {
       console.error("Error featch tasks: ", err);

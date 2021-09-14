@@ -1,13 +1,9 @@
 import { useState } from "react";
 import {
   FaTimes,
-  FaEquals,
-  FaClock,
   FaEdit,
   FaCheck,
-  FaTrashAlt,
 } from "react-icons/fa";
-import { dayName } from "../utls/date";
 
 
 // componenets
@@ -15,11 +11,9 @@ import Task from "./Task";
 import TaskEdit from "./TaskEdit";
 import DeleteTask from "./DeleteTask";
 
-const TaskSwitch = ({ key, task, deleteTask, toggleReminder, editTask }) => {
+const TaskSwitch = ({ task, deleteTask, toggleReminder, editTask }) => {
   // STATE
   const [mnueItem, setMnueItem] = useState(1);
-  const [editTaskToggle, setEditTaskToggle] = useState(false);
-  const [deleteTaskToggle, setDeleteTaskToggle] = useState(false);
   const [editedTask, setEditedTask] = useState(task);
 
   
@@ -30,7 +24,7 @@ const TaskSwitch = ({ key, task, deleteTask, toggleReminder, editTask }) => {
       component = (
         <>
           <Task
-            key={task.id}
+            _key={task.id}
             task={task}
             deleteTask={deleteTask}
             toggleReminder={toggleReminder}
@@ -62,7 +56,7 @@ const TaskSwitch = ({ key, task, deleteTask, toggleReminder, editTask }) => {
       component = (
         <>
           <TaskEdit
-            key={task.id}
+            _key={task.id}
             task={task}
             deleteTask={deleteTask}
             toggleReminder={toggleReminder}

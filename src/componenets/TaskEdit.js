@@ -1,12 +1,9 @@
-import { useState } from "react";
 import { FaClock } from "react-icons/fa";
 import { dayName } from "../utls/date";
 import { useSpring, animated } from "react-spring";
 
 const TaskEdit = ({
   task,
-  deleteTask,
-  toggleReminder,
   editedTask,
   setEditedTask,
   setMnueItem,
