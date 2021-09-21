@@ -71,7 +71,7 @@ function App(props) {
 
   // Delete Task
   const deleteTask = async (id) => {
-    await fetch(`${ process.env.REACT_APP_SERVER }/tasks/${ id }`, { method: "DELETE" });
+    await fetch(`${ process.env.REACT_APP_SERVER }tasks/${ id }`, { method: "DELETE" });
     setTasks(tasks.filter((task) => task.id !== id));
   };
 
@@ -125,7 +125,7 @@ function App(props) {
 
   // Add Task
   const addTask = async (task) => {
-    const res = await fetch(`${ process.env.REACT_APP_SERVER }tasks/`, {
+    try {const res = await fetch(`${ process.env.REACT_APP_SERVER }tasks/`, {
       method: "POST",
       headers: {
         "content-type": "application/json",
@@ -133,7 +133,10 @@ function App(props) {
       body: JSON.stringify(task),
     });
     const data = await res.json();
-    setTasks([...tasks, data]);
+      setTasks([...tasks, data]);
+    } catch (err) {
+      console.error("Error feach Tasks: ",err)
+    }
 
     // const newTask = { id: tasks.length + 1, ...task };
     // setTasks([...tasks, newTask]);
