@@ -126,7 +126,7 @@ function App(props) {
 
   // Add Task
   const addTask = async (task) => {
-    try {const res = await fetch(`/tasks/`, {
+    try {const res = await fetch(`/api/tasks/`, {
       method: "POST",
       headers: {
         "content-type": "application/json",
