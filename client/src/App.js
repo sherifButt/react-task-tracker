@@ -37,7 +37,7 @@ function App(props) {
   // fetch Tasks
   const fetchTasks = async () => {
     try {
-      const res = await fetch("/tasks", { method: "GET" });
+      const res = await fetch("/api/tasks", { method: "GET" });
       const data = await res.json();
       console.log("-->", process.env.REACT_APP_SERVER)
       return data;
@@ -49,7 +49,7 @@ function App(props) {
   // fetch one Task
   const fetchTask = async (id) => {
     try {
-      const res = await fetch(`/tasks/${ id }`, {
+      const res = await fetch(`/api/tasks/${ id }`, {
         method: "GET",
       });
       const data = await res.json();
@@ -61,7 +61,7 @@ function App(props) {
 
   // Update data
   const updateData = async (id, data) => {
-    await fetch(`/tasks/${ id }`, {
+    await fetch(`/api/tasks/${ id }`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
@@ -72,13 +72,13 @@ function App(props) {
 
   // Delete Task
   const deleteTask = async (id) => {
-    await fetch(`/tasks/${ id }`, { method: "DELETE" });
+    await fetch(`/api/tasks/${ id }`, { method: "DELETE" });
     setTasks(tasks.filter((task) => task.id !== id));
   };
 
   // Post all tasks
   const saveTasks = async (tasks) => {
-    await fetch(process.env.SERVER, {
+    await fetch("/api/", {
       method: "POST",
       headers: {
         "Content-type": "application/json",
@@ -89,7 +89,7 @@ function App(props) {
 
   // Save reorderd Tasks to Server
   const saveReorderdTasks = async (srcI, disI) => {
-    await fetch(`/tasks/?srcI=${ srcI }&disI=${ disI }`, {
+    await fetch(`/api/tasks/?srcI=${ srcI }&disI=${ disI }`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
